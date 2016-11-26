@@ -13,7 +13,7 @@ arch="all"
 license="GPL2 with Classpath"
 depends="$pkgname-jre java-cacerts"
 options="sover-namecheck"
-makedepends="bash findutils tar zip file paxmark gawk util-linux libxslt
+makedepends="bash findutils tar zip file gawk util-linux libxslt
 	autoconf automake linux-headers
 	ca-certificates
 	nss-dev cups-dev jpeg-dev giflib-dev libpng-dev libxt-dev
@@ -165,7 +165,7 @@ build() {
 		--with-jaxws-src-zip=$srcdir/jaxws-$_dropsver.tar.bz2 \
 		--with-jdk-src-zip=$srcdir/jdk-$_dropsver.tar.bz2 \
 		--with-langtools-src-zip=$srcdir/langtools-$_dropsver.tar.bz2 \
-		--with-pax=paxmark \
+		--without-pax \
 		--with-jdk-home=$BOOTSTRAP_JAVA_HOME \
 		--with-pkgversion="Alpine ${pkgver}-r${pkgrel}" \
 		|| return 1
@@ -180,9 +180,6 @@ package() {
 	mkdir -p "$pkgdir"/$INSTALL_BASE
 	cp -a "$builddir"/openjdk.build/j2sdk-image/* "$pkgdir"/$INSTALL_BASE || return 1
 	rm "$pkgdir"/$INSTALL_BASE/src.zip
-
-	# pax mark again (due to fakeroot xattr handling bug)
-	"$builddir"/pax-mark-vm "$pkgdir"/$INSTALL_BASE
 
 	# symlink to shared java cacerts store
 	rm -f "$pkgdir"/$INSTALL_BASE/jre/lib/security/cacerts
@@ -218,9 +215,6 @@ jrebase() {
 
 	# rest of the jre subdir (which were not taken by -jre subpkg)
 	mv "$pkgdir"/$INSTALL_BASE/jre "$subpkgdir"/$INSTALL_BASE || return 1
-
-	# pax mark again (due to fakeroot xattr handling bug)
-	"$builddir"/pax-mark-vm "$subpkgdir"/$INSTALL_BASE
 }
 
 jre() {
@@ -239,9 +233,6 @@ jre() {
 		mkdir -p "$subpkgdir"/$INSTALL_BASE/$dirname
 		mv "$pkgdir"/$INSTALL_BASE/$A "$subpkgdir"/$INSTALL_BASE/$dirname || return 1
 	done
-
-	# pax mark again (due to fakeroot xattr handling bug)
-	"$builddir"/pax-mark-vm "$subpkgdir"/$INSTALL_BASE
 }
 
 doc() {
