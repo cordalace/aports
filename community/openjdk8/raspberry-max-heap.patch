@@ -1,0 +1,27 @@
+diff --git a/openjdk/common/autoconf/generated-configure.sh b/openjdk/common/autoconf/generated-configure.sh
+index 9867b6b..b110026 100644
+--- openjdk/common/autoconf/generated-configure.sh
++++ openjdk/common/autoconf/generated-configure.sh
+@@ -17583,11 +17583,17 @@ $as_echo_n "checking flags for boot jdk java command for big workloads... " >&6;
+   # Maximum amount of heap memory.
+   # Maximum stack size.
+   if test "x$BOOT_JDK_BITS" = x32; then
+-    if test "x$OPENJDK_BUILD_CPU_ARCH" = "xs390"; then
+-      JVM_MAX_HEAP=768M
+-    else
+-      JVM_MAX_HEAP=1100M
+-    fi
++    case "$OPENJDK_BUILD_CPU_ARCH" in
++      s390)
++        JVM_MAX_HEAP=768M
++        ;;
++      arm)
++        JVM_MAX_HEAP=768M
++        ;;
++      *)
++        JVM_MAX_HEAP=1100M
++        ;;
++    esac
+     STACK_SIZE=768
+   else
+     # Running Javac on a JVM on a 64-bit machine, takes more space since 64-bit
