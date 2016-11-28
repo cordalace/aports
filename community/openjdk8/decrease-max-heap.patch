@@ -1,0 +1,26 @@
+diff --git a/Makefile.in b/Makefile.in
+index 9d5a0e2..c0b3c01 100644
+--- Makefile.in
++++ Makefile.in
+@@ -788,7 +788,7 @@ TAR_SUFFIX = tar.xz
+ @WITH_NASHORN_CHECKSUM_FALSE@NASHORN_SUM = $(NASHORN_SHA256SUM)
+ @WITH_NASHORN_CHECKSUM_TRUE@NASHORN_SUM = @NASHORN_CHECKSUM@
+ @WITH_HGREV_TRUE@REV_ARG = -r $(HGREV)
+-@BOOTSTRAPPING_FALSE@MEMORY_LIMIT = -J-Xmx1024m
++@BOOTSTRAPPING_FALSE@MEMORY_LIMIT = -J-Xmx512m
+ 
+ # This should not depend on bootstrapping
+ # but on whether MEMORY_LIMIT is accepted
+diff --git a/javac.in b/javac.in
+index deefc58..d2d2bc1 100644
+--- javac.in
++++ javac.in
+@@ -22,7 +22,7 @@ push @bcoption, '-bootclasspath', glob '@abs_top_builddir@/bootstrap/jdk1.7.0/jr
+     unless grep {$_ eq '-bootclasspath'} @ARGV;
+ my @ecj_parms = ($ECJ_WARNINGS, @bcoption);
+ my @javac_parms = ($JAVAC_WARNINGS, '-Xprefer:source',
+-		   '-XDignore.symbol.file=true', '-J-Xmx1024m');
++		   '-XDignore.symbol.file=true', '-J-Xmx512m');
+ 
+ # Work around ecj's inability to handle duplicate command-line
+ # options and unknown javac options.

@@ -1,8 +1,7 @@
-diff --git a/openjdk/common/autoconf/generated-configure.sh b/openjdk/common/autoconf/generated-configure.sh
-index 9867b6b..b110026 100644
---- openjdk/common/autoconf/generated-configure.sh
-+++ openjdk/common/autoconf/generated-configure.sh
-@@ -17583,11 +17583,17 @@ $as_echo_n "checking flags for boot jdk java command for big workloads... " >&6;
+Decrease max heap for Raspberry Pi
+--- openjdk.orig/common/autoconf/boot-jdk.m4
++++ openjdk/common/autoconf/boot-jdk.m4
+@@ -360,11 +360,17 @@ AC_DEFUN_ONCE([BOOTJDK_SETUP_BOOT_JDK_ARGUMENTS],
    # Maximum amount of heap memory.
    # Maximum stack size.
    if test "x$BOOT_JDK_BITS" = x32; then
@@ -16,9 +15,9 @@ index 9867b6b..b110026 100644
 +        JVM_MAX_HEAP=768M
 +        ;;
 +      arm)
-+        JVM_MAX_HEAP=768M
++        JVM_MAX_HEAP=512M
 +        ;;
-+      *)
++      *) 
 +        JVM_MAX_HEAP=1100M
 +        ;;
 +    esac
